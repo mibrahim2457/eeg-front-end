@@ -1,0 +1,67 @@
+<div>
+  <ngx-datatable
+    class="material ngx-datatable fixed-header datatable-body-row striped"
+    [rows]="rows"
+    [columnMode]="'flex'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="'auto'"
+    [externalPaging]="true"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    [loadingIndicator]="isLoading"
+    (page)='setPage($event)'>
+
+    <ngx-datatable-column name="Created" [flexGrow]="4">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Date</span>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong><span class="text-primary">{{value | date :'yyyy-MM-dd'}}</span>
+          <span class="text-success small pl-1">{{value | date :'hh:mm a'}}</span></strong>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Age" [flexGrow]="2">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">{{column.name}}</span>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value}}</strong>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="isEpilepsy" [flexGrow]="3">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Epilepsy?</span>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <span class="text-danger small" *ngIf="value">Present</span>
+        <span class="text-success small" *ngIf="!value">Not Present</span>
+
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="eeg" [flexGrow]="5">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Signal File</span>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <span class="small"><a href (click)="downloadSignalFile(value.signal)"
+                               data-toggle="tooltip" data-placement="top" title="Click to download Signal File">{{value.signal}}</a></span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="recordId" [flexGrow]="3">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <small>Detail</small>
+      </ng-template>
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <span ><a href (click)="showDetail(value)"
+                   data-toggle="tooltip" data-placement="top" title="Click to View Results in Detail" class="small">Show Detail</a></span>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+</div>

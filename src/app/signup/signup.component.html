@@ -1,0 +1,63 @@
+<div class="page login-page">
+  <div class="container">
+    <div class="form-outer text-center align-items-center ">
+      <div>
+          <div class="progress-materializecss" *ngIf="loading">
+              <div class="indeterminate"></div>
+          </div>
+          <div class="form-inner">
+              <div class="logo text-capitalize">
+                <span class="text-primary ">
+                  <strong>EEG Anomaly Detection System</strong>
+                </span>
+              </div>
+              <p>Register to keep track of your EEG recordings and their results.</p>
+              <form id="register-form" #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && register()">
+                <div class="form-group">
+                  <label for="register-username" class="label-custom">Name</label>
+                  <input id="register-username" [ngClass]="{'border-danger': registerUsername?.errors||registerUsername.value?.trim().length<3}"
+                            type="text" name="registerUsername" required [(ngModel)]="userModel.userName" #registerUsername="ngModel"/>
+                      <span class="small text-danger ml-2" *ngIf="registerUsername.hasError('required')">**Name is required</span>
+                      <span  class="small text-danger ml-2" *ngIf="registerUsername.value?.trim().length<3&&!registerUsername.hasError('required')">**Atleast 3 characters required</span>
+                </div>
+                <div class="form-group">
+                    <label for="register-email" class="label-custom">Email Address</label>
+                    <input id="register-email" type="email" name="registerEmail" required [(ngModel)]="userModel.userEmail"
+                           #registerEmail="ngModel" email  [ngClass]="{'border-danger': registerEmail?.errors || duplicate}"/>
+                    <small class="text-danger ml-2" *ngIf="registerEmail?.errors ||duplicate">
+                      <span *ngIf="registerEmail.hasError('required')">**Email is required</span>
+                      <span *ngIf="registerEmail?.errors?.email">**Email not correct</span>
+                      <span *ngIf="duplicate">**Email is already registered</span>
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="register-password" class="label-custom">Password </label>
+                    <input id="register-password" type="password" name="registerPassword" required [(ngModel)]="userModel.userPassword"
+                           #registerPassword="ngModel" minlength="8"  [ngClass]="{'border-danger': registerPassword?.errors}"
+                           pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&-]{8,}$"/>
+                    <small class="text-danger ml-2" *ngIf="registerPassword?.errors">
+                      <span *ngIf="registerPassword?.errors.minlength">
+                      **Password should 8 chars long</span>
+                      <span *ngIf="registerPassword?.errors.pattern">
+                      **Password should mixture of numbers and letters</span>
+                      <span *ngIf="registerPassword.hasError('required')">**Password is required</span>
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password" class="label-custom">Confirm password </label>
+                    <input id="register-confirm-password" type="password" ngModel name="registerConfirmPassword" required
+                           #registerConfirmPassword="ngModel" [equalTo]="registerPassword"
+                           [ngClass]="{'border-danger': registerConfirmPassword?.errors}"/>
+                    <small class="text-danger ml-2" *ngIf="registerConfirmPassword?.errors">
+                      <span *ngIf="registerConfirmPassword?.errors?.equalTo">
+                      **Both Passwords do not match</span>
+                    </small>
+                </div>
+                <input id="register" type="submit" value="Register" class="btn btn-primary" [disabled]="registerForm.form.invalid">
+              </form>
+              <small>Already have an account? </small>
+              <a [routerLink]="['/login']" class="signup">Login</a>
+          </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<!-- Side Navbar -->
+<nav class="side-navbar">
+  <div class="side-navbar-wrapper">
+    <div class="sidenav-header d-flex align-items-center justify-content-center">
+      <div class="sidenav-header-inner text-center"><img src="./assets/images/user.png" alt={{currentUser.user.name}} class="img-fluid rounded-circle" />
+        <h2 class="h5 text-uppercase text-info">{{currentUser.user.name}}</h2><span class="text-uppercase">User</span>
+      </div>
+      <div class="sidenav-header-logo"><a [routerLink]="['/dashboard']" class="brand-small text-center">
+        <!--<strong>{{currentUser.user.name.substr(0,1)}}</strong>-->
+        <!--<strong class="text-primary">{{currentUser.user.name.substr(currentUser.user.name.indexOf(' '),1)}}</strong>-->
+        <img src="./assets/images/user.png" alt={{currentUser.user.name}} class="img-fluid rounded-circle" />
+        </a>
+      </div>
+    </div>
+    <div class="main-menu">
+      <ul id="side-main-menu" class="side-menu list-unstyled">
+        <li routerLinkActive="active"> <a [routerLink]="['/dashboard']"><i class="fa fa-home"></i><span>Home</span></a></li>
+        <li routerLinkActive="active"> <a [routerLink]="['/results']"><i class="fa fa-bar-chart-o"></i><span>Results</span></a></li>
+        <li routerLinkActive="active"> <a [routerLink]="['/history']"><i class="fa fa-history"></i><span>History</span></a></li>
+        <li routerLinkActive="active"> <a [routerLink]="['/settings']"><i class="fa fa-cog"></i><span>Settings</span></a></li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<div class="page home-page">
+  <!-- navbar-->
+  <header class="header">
+    <nav class="navbar">
+      <div class="container-fluid ">
+        <div class="align-items-center navbar-holder d-flex align-content-center">
+          <div class="navbar-header">
+            <a href="#" id="toggle-btn" class="menu-btn">
+              <i class="fa fa-bars"></i>
+            </a>
+            <a href [routerLink]="['/dashboard']" class="navbar-brand">
+              <div class="brand-text hidden-sm-down">
+                <strong class="text-danger">EEG Analyzer </strong>
+              </div>
+            </a>
+          </div>
+        </div>
+        <ul class=" nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+          <li class="nav-item"><a href [routerLink]="['/login']" class="nav-link logout">Logout<i class="fa fa-sign-out"></i></a></li>
+        </ul>
+
+      </div>
+
+    </nav>
+  </header>
+
+  <section class="dashboard-counts section-padding mt-0 pt-0 mb-0 pb-0">
+    <div class="container-fluid">
+      <!--<h1 class="text-center">-->
+      <!--<img src="../assets/images/ECG_Principle_fast.gif" class="img-responsive" width="120" height="100">-->
+      <!--Welcome to {{title}}!-->
+      <!--<img src="../assets/images/ECG_Principle_fast.gif" class="img-responsive" width="120" height="100">-->
+      <!--</h1>-->
+
+       <router-outlet></router-outlet>
+
+    </div>
+  </section>
+
+
+  <footer class="main-footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <p>EEG Analyzer &copy; 2018-2020</p>
+        </div>
+        <div class="col-sm-6 text-right">
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+

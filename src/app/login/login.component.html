@@ -1,0 +1,115 @@
+<div class="page login-page">
+  <div class="container">
+    <div class="form-outer text-center  align-items-center justify-content-center">
+      <div>
+        <div class="progress-materializecss" *ngIf="loading">
+          <div class="indeterminate"></div>
+        </div>
+        <div id="loginFormContent" class="form-inner">
+          <div class="logo text-capitalize">
+            <span class="text-primary ">
+              <strong>EEG Anomaly detection System</strong>
+            </span>
+          </div>
+          <p>Login to keep track of your EEG recordings and their results.</p>
+          <form id="login-form" method="post" #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && login()">
+            <div class="form-group">
+              <label for="login-email" class="label-custom">Email</label>
+              <input id="login-email" type="email" name="loginEmail" required [(ngModel)]="model.userEmail"
+                      #loginEmail="ngModel" [ngClass]="{'border-danger': loginEmail?.errors||!isUserFound}"/>
+              <small class="text-danger ml-2" *ngIf="isSubmitted && (loginEmail?.errors||isUserFound)">
+                <span *ngIf="loginEmail.hasError('required')">Email is required</span>
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="login-password" class="label-custom">Password</label>
+              <input id="login-password" type="password" name="loginPassword" required [(ngModel)]="model.userPassword"
+                      #loginPassword="ngModel" [ngClass]="{'border-danger': loginPassword?.errors||isPasswordCorrect}"
+                      pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&-]{8,}$"/>
+              <small class="text-danger ml-2" *ngIf="isSubmitted && (loginPassword?.errors||isPasswordCorrect)">
+                <span *ngIf="loginPassword.hasError('required')">Password is required</span>
+                <span *ngIf="loginPassword?.error.pattern">**Password should be mixture of letters and numbers</span>
+              </small>
+            </div>
+
+            <div class="terms-conditions d-flex justify-content-center">
+              <input id="license" type="checkbox" name="keepLogin" class="form-control-custom" ngModel #keepLogin="ngModel">
+              <label for="license">keep me logged in</label>
+            </div>
+
+            <input id="login" type="submit" value="Login" class="btn btn-primary" [disabled]="loginForm.form.invalid">
+          </form>
+          <a href="#" data-target="#pwdModal" data-toggle="modal" class="forgot-pass">Forgot Password?</a>
+          <small>Do not have an account?</small>
+          <a [routerLink]="['/signup']" class="signup">Signup</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pwdModal" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="text-center">What's My Password?</h5>
+        </div>
+        <div class="modal-body">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div id="panelBody" class="panel-body">
+                <div class="text-center">
+                  <div class="panel-body" *ngIf="!isEmailSent && !isSending">
+                    <p>Enter your registered email to get new password</p>
+                    <p *ngIf="isEmailSendingError" class="small text-danger">**Email could not sent due to Internal Server Problem</p>
+
+                    <form id="recoverForm" method="post" #recoverForm="ngForm" (ngSubmit)="recoverForm.form.valid && recover()">
+                      <div class="form-group">
+                        <label for="recover-email" class="label-custom">Email</label>
+                        <input id="recover-email" type="email" name="recoverEmail" required [(ngModel)]="recover_Email"#recoverEmail="ngModel"
+                                [ngClass]="{'border-danger': recoverEmail?.errors||!isUserFound}"/>
+                        <small class="text-danger ml-2" *ngIf="isSubmitted && (recoverEmail?.errors||!isUserFound)">
+                          <span *ngIf="recoverEmail?.hasError('required')">**Email is required</span>
+                          <span *ngIf="isUserFound">**User does not exist</span>
+                        </small>
+                      </div>
+                      <input id="recover" type="submit" value="Send Password" class="btn btn-primary" [disabled]="recoverForm.form.invalid">
+                    </form>
+                  </div>
+                  <div class="panel-body" *ngIf="isEmailSent && !isSending">
+                    <p>An email has been sent to <strong>{{recover_Email}}</strong>.<br> Please check your Inbox and Spam folder for email.</p>
+                    <input id="resend" type="submit" value="Resend password" class="btn btn-warning mt-2"
+                           (click)="recover()"/>
+                   </div>
+                  <div class="panel-body d-flex align-items-center justify-content-center" *ngIf="isSending">
+                    <div class="loading">
+                      Sending
+                      <span class="jumping-dots">
+                        <span class="dot-1">.</span>
+                        <span class="dot-2">.</span>
+                        <span class="dot-3">.</span>
+                      </span>
+                    </div>
+                  </div>
+                  <a *ngIf="!isSending" href="#" data-dismiss="modal" aria-hidden="true"
+                        class="d-block mt-2 text-sm-center small">Cancel</a>
+                  <a *ngIf="isSending" class="d-block text-sm-center small text-muted">Cancel</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+$("#pwdModal").hover(function(){
+  $("document").css("color", "red");
+});
+
+
+</script>

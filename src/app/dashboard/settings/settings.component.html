@@ -1,0 +1,63 @@
+<div id="settings" role="tablist" aria-multiselectable="true">
+    <div class="card">
+
+        <div class="card-header " role="tab" id="tabTwo" data-toggle="collapse" data-parent="#settings" href="#panelTwo"
+             aria-expanded="true" aria-controls="panelTwo">
+          <h5 class="card-title">
+            <a >
+              Change password
+            </a>
+          </h5>
+        </div>
+        <div id="panelTwo" class="collapse show" role="tabcard" aria-labelledby="tabTwo">
+          <div class="card-body">
+            <div class="">
+            <form style="max-width: 400px" #changePasswordForm="ngForm" #registerForm="ngForm"
+                  (ngSubmit)="changePasswordForm.form.valid && changePassword()">
+              <fieldset class="form-group">
+                <label for="current_password">Current password
+
+                  <small class="text-danger ml-2" *ngIf="curr_password?.errors || !isCurrPassCorrect">
+                    <span *ngIf="curr_password?.hasError('required')">*required</span>
+                    <span *ngIf="!isCurrPassCorrect">*Password is not correct</span>
+                  </small>
+
+                </label>
+                <input type="password" class="form-control" id="current_password" name="current_password" [(ngModel)]="currPassword"
+                       #curr_password="ngModel" required [ngClass]="{'border-danger': curr_password?.errors}">
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label for="new_password">New Password
+
+                  <small class="text-danger ml-2" *ngIf="new_assword?.errors"><span *ngIf="new_assword?.errors.minlength">
+                  *Password should 8 chars long</span>
+                    <span *ngIf="new_assword?.hasError('required')">*required</span>
+                  </small>
+                </label>
+                <input type="password" class="form-control" id="new_password" name="new_password" [(ngModel)]="newPassword"
+                       #new_assword="ngModel" minlength="8" required [ngClass]="{'border-danger': new_assword?.errors}"/>
+
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label for="confirm_password">Confirm New Password
+
+                  <small class="text-danger ml-2" *ngIf="confirm_password?.errors?.equalTo">
+                  *Both Passwords do not match</small>
+
+                </label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_passowrd"
+                       ngModel required #confirm_password="ngModel" [equalTo]="new_assword"
+                       [ngClass]="{'border-danger': confirm_password?.errors?.equalTo}" >
+              </fieldset>
+
+              <input type="submit" value="Submit" class="btn btn-default" [disabled]="changePasswordForm?.form.invalid">
+              <small *ngIf="isPasswordChanged" class="text-success mr-2">Changed</small>
+            </form>
+            </div>
+          </div>
+        </div>
+
+    </div>
+

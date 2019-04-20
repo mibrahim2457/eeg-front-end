@@ -1,0 +1,165 @@
+
+<div class="row" style="margin-top: -40px">
+  <div class="col-md-6">
+      <div class="card">
+          <div class="card-body">
+            <app-zingchart [chart]=raw_eeg></app-zingchart>
+
+          </div>
+        </div>
+
+  </div>
+  <div class="col-md-6">
+      <div class="card">
+          <div class="card-body">
+            <app-zingchart [chart]=filter_eeg></app-zingchart>
+
+          </div>
+        </div>
+
+    </div>
+</div>
+
+<br>
+<h1 style="margin-left: 40%">Extracted Features</h1>
+<br>
+
+<div class="row">
+<div class="col-md-6">
+    <div class="card">
+      <br>
+        <div class="card-header">
+            <h4>Theta Rhythm Maximum: {{this.results.theta_max}}</h4>
+            <h4>Theta Rhythm Minimum: {{this.results.theta_min}}</h4>
+            <h4>Theta Rhythm Average: {{this.results.theta_average}}</h4>
+        </div>
+        <br>
+        <br>
+        <div class="card-body">
+          <app-zingchart [chart]=featured_eeg1></app-zingchart>
+
+        </div>
+      </div>
+
+</div>
+<div class="col-md-6">
+    <div class="card">
+      <br>
+        <div class="card-header">
+            <h4>Alpha-Low Rhythm Maximum: {{this.results.alpha_low_max}}</h4>
+            <h4>Alpha-Low Rhythm Minimum: {{this.results.alpha_low_min}}</h4>
+            <h4>Alpha-Low Rhythm Average: {{this.results.alpha_low_average}}</h4>
+        </div>
+        <br>
+        <br>
+        <div class="card-body">
+          <app-zingchart [chart]=featured_eeg2></app-zingchart>
+        </div>
+      </div>
+
+</div>
+</div>
+<br>
+<div class="row">
+<div class="col-md-6">
+    <div class="card">
+        <br>
+        <div class="card-header">
+            <h4>Alpha-High Rhythm Maximum: {{this.results.alpha_high_max}}</h4>
+            <h4>Alpha-High Rhythm Minimum: {{this.results.alpha_high_min}}</h4>
+            <h4>Alpha-High Rhythm Average: {{this.results.alpha_high_average}}</h4>
+        </div>
+        <br>
+        <br>
+        <div class="card-body">
+          <app-zingchart [chart]=featured_eeg3></app-zingchart>
+        </div>
+      </div>
+
+</div>
+<div class="col-md-6">
+    <div class="card">
+      <br>
+        <div class="card-header">
+            <h4>Beta Rhythm Maximum: {{this.results.beta_max}}</h4>
+            <h4>Beta Rhythm Minimum: {{this.results.beta_min}}</h4>
+            <h4>Beta Rhythm Average: {{this.results.beta_average}}</h4>
+        </div>
+        <br>
+        <br>
+        <div class="card-body">
+          <app-zingchart [chart]=featured_eeg4></app-zingchart>
+        </div>
+      </div>
+
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-md-11">
+      <div class="card" style="margin-left: 10%">
+          <br>
+          <div class="card-header">
+              <h4>Gamma Rhythm Maximum: {{this.results.gamma_max}}</h4>
+              <h4>Gamma Rhythm Minimum: {{this.results.gamma_min}}</h4>
+              <h4>Gamma Rhythm Average: {{this.results.gamma_average}}</h4>
+          </div>
+          <br>
+          <br>
+          <div class="card-body">
+            <app-zingchart [chart]=featured_eeg5></app-zingchart>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <div class="card" style="margin-left: 12%;width: 95%">
+            <div class="card-header">
+                <h4>Petrosian Fractal Dimensian (PFD): {{this.results.pfd}}</h4>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="card" style="width: fit-content;margin-left: 10%;padding: 0 33px 0 0">
+            <div class="card-header">
+                <h4>Detrended Fluctuation Analysis (DFA): {{this.results.dfa}}</h4>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card" style="width: fit-content;margin-left: 0%">
+              <div class="card-header" style="padding: 0 50px 0 0">
+                  <h4>Hurst Exponent: {{this.results.hurst_exponent}}</h4>
+
+              </div>
+            </div>
+          </div>
+      </div>
+</div>
+
+<br>
+
+<h3>Final Results/Predictions</h3>
+<div class="row">
+
+  <div class="col-md">
+    <div class="card">
+      <div class="card-header">
+        <h4>Epilepsy?</h4>
+      </div>
+      <div class="card-body h2 d-flex align-items-center justify-content-center">
+        <p class="text-success" *ngIf="!results.isEpilepsy">Not Present</p>
+        <p class="text-danger" *ngIf="results.isEpilepsy">Present</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+

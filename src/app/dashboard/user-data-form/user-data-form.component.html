@@ -1,0 +1,104 @@
+<div class="card" style="max-width: 100%;">
+  <div class="card-header d-flex align-items-center">
+    <h2 class="h5 display display">Physical parameters of Subject(Patient)</h2>
+  </div>
+  <div class="card-body">
+
+    <div class="container" >
+      <form method="post" #userForm="ngForm" (ngSubmit)="userForm.form.valid && onFormSubmit()">
+        <div class="form-group row pb-0 mb-0">
+          <div class="col-sm-6">
+
+            <fieldset class="form-group">
+              <label for="input_age">Age
+                <small class="text-danger ml-2" *ngIf="age?.errors"><span *ngIf="age?.errors?.min">*min age limit is 1</span>
+                <span *ngIf="age?.errors?.max">*max age limit is 120</span>
+                <span *ngIf="age.hasError('required')">*Age is required</span></small>
+              </label>
+              <input type="number" min="1" class="form-control" [ngClass]="{'border-danger': age?.errors}" id="input_age"
+                     name="age" required [(ngModel)]="userMetaModel.age"
+                     #age="ngModel" [min]="1" [max]="150" [disabled]="!canEdit"/>
+            </fieldset>
+
+          </div>
+          <div class="col-sm-6  pb-0 mb-0">
+
+            <fieldset class="form-group">
+              <label>Gender: </label><br>
+              <label class="custom-control custom-radio active">
+                <input id="radio_male" name="radio" type="radio" class="custom-control-input" value="m"
+                       [(ngModel)]="userMetaModel.gender" checked="" required  [disabled]="!canEdit">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Male</span>
+              </label>
+              <label class="custom-control custom-radio">
+                <input id="radio_female" name="radio" type="radio" class="custom-control-input" value="f"
+                       [(ngModel)]="userMetaModel.gender" required  [disabled]="!canEdit">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Female</span>
+
+              </label>
+            </fieldset>
+          </div>
+        </div>
+        <div class="form-group row mt-0 pt-0">
+          <div class="col mt-0 pt-0">
+            <a *ngIf="!canEdit" href (click)="toggleEdit()" class="pull-right mt-0 pt-0">Edit Metadata</a>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-9">
+            <label for="customFile">Upload Signal recording File:
+              <small class="text-danger ml-2" *ngIf="!isFileSelected">*Signal file is required</small>
+              <small class="text-danger ml-2" *ngIf="!isValidFile">*Not a valid Signal file</small>
+            </label>
+            <label class="custom-file input-group">
+              <input type="file" id="customFile" class="custom-file-input form-control" (change)="onFileSelect($event)"
+                     required #file name="file"  ng2FileSelect [uploader]="uploader" accept="text/csv"  [accept]="allowedMimeTypes.toString()"/>
+              <span class="custom-file-control" id="file_name">{{selectedFile.name}}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-5">
+              <label for="input_sampling_rate">
+                <i class="fa fa-info-circle mr-1" data-toggle="tooltip" data-placement="top"
+                   title="Sampling Rate is the Frequency of the Signals. Default : 360.0"></i>
+                Sampling Rate:
+                <small class="text-danger ml-2" *ngIf="sample_rate?.errors">*Sampling Rate is required
+                  <span *ngIf="sample_rate?.errors?.max">*max sampling rate limit is 1000</span>
+                  <span *ngIf="sample_rate?.errors?.min">*min sampling rate limit is 1</span>
+                </small>
+              </label>
+              <div class="input-group">
+                <input type="text" class="form-control" id="input_sampling_rate" aria-label="Sampling Rate in Hertz (Hz)"
+                       name="sample_rate" value="{{eegSignal.sampleRate}}" [min]="1" [max]="1000" [(ngModel)]="eegSignal.sampleRate" #sample_rate="ngModel">
+                <span class="input-group-addon">Hz</span>
+              </div>
+            </div>
+          </div>
+
+        <div class="form-group row">
+          <div class="col-sm-8">
+            <div class="input-group">
+              <button type="submit" class="btn btn-success pull-right wide" (click)="onFormSubmit()"
+                      [disabled]="!isFileSelected || userForm.form.invalid || !isValidFile" *ngIf="!loading">Proceed to Results</button>
+              <button class="btn btn-info pull-right wide" *ngIf="loading">Processing...</button>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="input-group">
+              <button type="reset" class="btn btn-danger pull-right wide" (click)="onFormReset()">Reset</button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>
